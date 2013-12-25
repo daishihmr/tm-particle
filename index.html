@@ -1,0 +1,141 @@
+<html ng-app lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>tm-particle</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div ng-controller="MainCtrl" style="float:left;margin-right:50px">
+<ul>
+    <li>
+        <label>生成時間(ms)</label> <input type="number" ng-model="limit" ng-change="regenerate()">
+    </li>
+    <li>
+        <label class="t">生成個数</label><input type="checkbox"><label>変化</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="generate.0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="generate.1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="generate.2" ng-options="e for e in easings"></select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="generate.3">
+            </li>
+        </ul>
+    </li>
+    <li>
+        <label class="t">生成範囲</label><input type="checkbox"><label>変化</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="generateArea.0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="generateArea.1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="generateArea.2" ng-options="e for e in easings"></select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="generateArea.3">
+            </li>
+        </ul>
+    </li>
+    <li>
+        <label class="t">ブレンドモード</label>
+        <select ng-model="blendMode" ng-options="b for b in blendModes"></select>
+    </li>
+    <li>
+        <label class="t">生存時間(ms)</label>
+        <input type="number" ng-model="ageLimit">
+    </li>
+    <li>
+        <label class="t">スピード</label><input type="checkbox"><label>変化</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="speed.0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="speed.1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="speed.2" ng-options="e for e in easings"></select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="speed.3">
+            </li>
+        </ul>
+    </li>
+    <li>
+        <label class="t">進行方向</label><input type="checkbox"><label>変化</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="direction.0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="direction.1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="direction.2" ng-options="e for e in easings"></select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="direction.3">
+            </li>
+        </ul>
+    </li>
+    <li>
+        <label class="t">半径</label><input type="checkbox"><label>変化</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="direction.0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="direction.1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="direction.2" ng-options="e for e in easings"></select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="direction.3">
+            </li>
+        </ul>
+    </li>
+
+</ul>
+</div>
+
+<div>
+    <canvas id="app" width="400" height="400" style="border:1px solid white"></canvas>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+<script src="../tmlib.js/build/tmlib.js"></script>
+<script src="particleelement.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

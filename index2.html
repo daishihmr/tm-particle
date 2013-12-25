@@ -1,0 +1,49 @@
+<html ng-app lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>tm-particle</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div style="float:left;margin-right:50px">
+    <canvas id="app" width="400" height="400" style="border:1px solid white"></canvas>
+</div>
+
+<div ng-controller="MainCtrl">
+<ul>
+    <li>
+        <label>生成時間(ms)</label> <input type="number" ng-model="limit" ng-number>
+    </li>
+    <li>
+        <label>生成個数</label>
+        <ul>
+            <li>
+                <label>初期値</label>
+                <input type="number" ng-model="generate0">
+            </li>
+            <li>
+                <label>最終値</label>
+                <input type="number" ng-model="generate1">
+            </li>
+            <li>
+                <label>イージング</label>
+                <select ng-model="generate2" >
+                </select>
+            </li>
+            <li>
+                <label>変化時間(ms)</label>
+                <input type="number" ng-model="generate3">
+            </li>
+        </ul>
+    </li>
+</ul>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+<script src="../tmlib.js/build/tmlib.js"></script>
+<script src="particleelement.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
