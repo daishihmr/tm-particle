@@ -74,7 +74,7 @@ tm.define("tm.display.Particle", {
         this.colors = [];
         for (var i = 0; i < data.colors.length; i++) {
             var cd = data.colors[i];
-            var c = tm.display.ColorElement(0, 0, 0, 0);
+            var c = tm.particle.ColorElement(0, 0, 0, 0);
             newTweener(c, cd, "r", this.ageLimit);
             newTweener(c, cd, "g", this.ageLimit);
             newTweener(c, cd, "b", this.ageLimit);
@@ -121,26 +121,59 @@ tm.define("tm.display.Particle", {
 
 var newTweener = function(target, data, propName, duration) {
     var temp;
-    var sets = {};
-    sets[propName] = temp = evalValue(data[propName][0]);
+    var initialValues = {};
     var tos = {};
+
+    initialValues[propName] = temp = evalValue(data[propName][0]);
     tos[propName] = evalValue(data[propName][1], temp);
-    tm.app.Tweener(target).set(sets).to(tos, data[propName][3] || duration, data[propName][2]);
+    tm.app.Tweener(target).set(initialValues).to(tos, data[propName][3] || duration, data[propName][2]);
 };
 
 var evalValue = function(v, v2) {
     if (v === undefined) {
-        return typeof(v2) === "function" ? v2() : v2;
+        if (typeof(v2) === "number") {
+            return v2;
+        } else if (typeof(v2) === "object") {
+            if (v2.random) {
+                return Math.randf(v2.min, v2.max);
+            } else {
+                return v2.value;
+            }
+        } else {
+            return 0;
+        }
     } else {
-        return typeof(v) === "function" ? v() : v;
+        if (typeof(v) === "number") {
+            return v;
+        } else if (typeof(v) === "object") {
+            if (v.random) {
+                return Math.randf(v.min, v.max);
+            } else {
+                return v.value;
+            }
+        } else {
+            return 0;
+        }
     }
 };
+
+tm.define("tm.particle.GhostElement", {
+    superClass: "tm.app.Object2D",
+
+    init: function() {
+        this.superInit();
+    },
+
+    _dirtyCalc: function() {
+    },
+
+});
 
 /**
  * tweenerを利用可能な色クラス
  */
-tm.define("tm.display.ColorElement", {
-    superClass: "tm.app.Object2D",
+tm.define("tm.particle.ColorElement", {
+    superClass: "tm.particle.GhostElement",
 
     color: null,
 
@@ -154,7 +187,7 @@ tm.define("tm.display.ColorElement", {
     }
 });
 
-tm.display.ColorElement.prototype.accessor("r", {
+tm.particle.ColorElement.prototype.accessor("r", {
     get: function() {
         return this.color.r;
     },
@@ -162,7 +195,7 @@ tm.display.ColorElement.prototype.accessor("r", {
         this.color.r = Math.round(Math.clamp(v, 0, 255) * 10000) / 10000;
     }
 });
-tm.display.ColorElement.prototype.accessor("g", {
+tm.particle.ColorElement.prototype.accessor("g", {
     get: function() {
         return this.color.g;
     },
@@ -170,7 +203,7 @@ tm.display.ColorElement.prototype.accessor("g", {
         this.color.g = Math.round(Math.clamp(v, 0, 255) * 10000) / 10000;
     }
 });
-tm.display.ColorElement.prototype.accessor("b", {
+tm.particle.ColorElement.prototype.accessor("b", {
     get: function() {
         return this.color.b;
     },
@@ -178,7 +211,7 @@ tm.display.ColorElement.prototype.accessor("b", {
         this.color.b = Math.round(Math.clamp(v, 0, 255) * 10000) / 10000;
     }
 });
-tm.display.ColorElement.prototype.accessor("a", {
+tm.particle.ColorElement.prototype.accessor("a", {
     get: function() {
         return this.color.a;
     },
