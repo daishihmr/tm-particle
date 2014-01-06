@@ -24,141 +24,30 @@ td {
         <label>総生成時間(ms)</label> <input type="text" ng-model="limit">
     </li>
     <li>
-        <label class="t">生成個数</label>
-        <table>
-            <tr>
-                <td></td>
-                <td>初期値</td>
-                <td>
-                    <input type="checkbox" title="random" ng-model="generate.0.random">
-                    <span ng-if="!generate.0.random">
-                        <input type="text" ng-model="generate.0.value">
-                    </span>
-                    <span ng-if="generate.0.random">
-                        <input type="text" title="min" ng-model="generate.0.min">
-                        <input type="text" title="max" ng-model="generate.0.max">
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="3"><input type="checkbox" ng-model="enableEasing.generate"><label></td>
-                <td><span ng-class="{'text-muted': !enableEasing.generate}">最終値</span></td>
-                <td>
-                    <input type="checkbox" ng-model="generate.1.random" ng-disabled="!enableEasing.generate">
-                    <span ng-if="!generate.1.random">
-                        <input type="text" ng-model="generate.1.value" ng-disabled="!enableEasing.generate">
-                    </span>
-                    <span ng-if="generate.1.random">
-                        <input type="text" title="min" ng-model="generate.1.min" ng-disabled="!enableEasing.generate">
-                        <input type="text" title="max" ng-model="generate.1.max" ng-disabled="!enableEasing.generate">
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td><span ng-class="{'text-muted': !enableEasing.generate}">イージング</span></td>
-                <td>
-                    <select ng-model="genetate.2" ng-options="easing for easing in easings" ng-disabled="!enableEasing.generate"></select>
-                </td>
-            </tr>
-            <tr>
-                <td><span ng-class="{'text-muted': !enableEasing.generate}">変化時間(ms)</span></td>
-                <td><input type="text" title="" ng-model="generate.3" ng-disabled="!enableEasing.generate"></td>
-            </tr>
-        </table>
+        <div id="generate"></div>
     </li>
     <li>
-        <label class="t">生成範囲</label><input type="checkbox"><label>変化</label>
-        <ul>
-            <li>
-                <label>初期値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>最終値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>イージング</label>
-                <select></select>
-            </li>
-            <li>
-                <label>変化時間(ms)</label>
-                <input type="text">
-            </li>
-        </ul>
+        <div id="generateArea"></div>
     </li>
     <li>
-        <label class="t">ブレンドモード</label>
+        <label>ブレンドモード</label>
         <select></select>
     </li>
     <li>
-        <label class="t">生存時間(ms)</label>
-        <input type="text"   </li>
-    <li>
-        <label class="t">スピード</label><input type="checkbox"><label>変化</label>
-        <ul>
-            <li>
-                <label>初期値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>最終値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>イージング</label>
-                <select></select>
-            </li>
-            <li>
-                <label>変化時間(ms)</label>
-                <input type="text">
-            </li>
-        </ul>
+        <label>生存時間(ms)</label>
+        <input type="text">
     </li>
     <li>
-        <label class="t">進行方向</label><input type="checkbox"><label>変化</label>
-        <ul>
-            <li>
-                <label>初期値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>最終値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>イージング</label>
-                <select></select>
-            </li>
-            <li>
-                <label>変化時間(ms)</label>
-                <input type="text">
-            </li>
-        </ul>
+        <div id="speed"></div>
     </li>
     <li>
-        <label class="t">半径</label><input type="checkbox"><label>変化</label>
-        <ul>
-            <li>
-                <label>初期値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>最終値</label>
-                <input type="text">
-            </li>
-            <li>
-                <label>イージング</label>
-                <select></select>
-            </li>
-            <li>
-                <label>変化時間(ms)</label>
-                <input type="text">
-            </li>
-        </ul>
+        <div id="direction"></div>
     </li>
     <li>
-        <label class="t">色1</label><input type="checkbox"><label>変化</label>
+        <div id="radius"></div>
+    </li>
+    <li>
+        <label>色1</label><input type="checkbox"><label>変化</label>
         <ul>
             <li>
                 <label>初期値</label>
@@ -194,10 +83,48 @@ td {
     <canvas id="app" width="400" height="400" style="border:1px solid white"></canvas>
 </div>
 
-<div id="tmpl-test"></div>
-
-<script id="value-input" type="text/x-jquery-tmpl">
-<select ng-model="test2" ng-options="e for e in easings"></select>
+<script type="text/x-jquery-tmpl" id="value-input">
+        <label>${title}</label>
+        <table>
+            <tr>
+                <td></td>
+                <td>初期値</td>
+                <td>
+                    <input type="checkbox" title="ランダム" ng-model="${valueName}[0].random">
+                    <span ng-if="!${valueName}[0].random">
+                        <input type="number" ng-model="${valueName}[0].value">
+                    </span>
+                    <span ng-if="${valueName}[0].random">
+                        <input type="number" title="min" ng-model="${valueName}[0].min">
+                        <input type="number" title="max" ng-model="${valueName}[0].max">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="3"><input type="checkbox" title="変化" ng-model="enableEasing.${valueName}"><label></td>
+                <td><span ng-class="{'text-muted': !enableEasing.${valueName}}">最終値</span></td>
+                <td>
+                    <input type="checkbox" title="ランダム" ng-model="${valueName}[1].random" ng-disabled="!enableEasing.${valueName}">
+                    <span ng-if="!${valueName}[1].random">
+                        <input type="number" ng-model="${valueName}[1].value" ng-disabled="!enableEasing.${valueName}">
+                    </span>
+                    <span ng-if="${valueName}[1].random">
+                        <input type="number" title="min" ng-model="${valueName}[1].min" ng-disabled="!enableEasing.${valueName}">
+                        <input type="number" title="max" ng-model="${valueName}[1].max" ng-disabled="!enableEasing.${valueName}">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span ng-class="{'text-muted': !enableEasing.${valueName}}">イージング</span></td>
+                <td>
+                    <select ng-model="genetate[2]" ng-options="easing for easing in easings" ng-disabled="!enableEasing.${valueName}"></select>
+                </td>
+            </tr>
+            <tr>
+                <td><span ng-class="{'text-muted': !enableEasing.${valueName}}">変化時間(ms)</span></td>
+                <td><input type="number" title="" ng-model="${valueName}[3]" ng-disabled="!enableEasing.${valueName}"></td>
+            </tr>
+        </table>
 </script>
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
@@ -206,15 +133,47 @@ td {
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="../tmlib.js/build/tmlib.js"></script>
-<script src="particleelement.js"></script>
-<script src="data.js"></script>
-<script src="main.js"></script>
 
 <script>
+$("#value-input").tmpl({
+    "title": "生成個数",
+    "valueName": "generate"
+}).appendTo("#generate");
+
+$("#value-input").tmpl({
+    "title": "生成範囲",
+    "valueName": "generateArea"
+}).appendTo("#generateArea");
+
+$("#value-input").tmpl({
+    "title": "スピード",
+    "valueName": "speed"
+}).appendTo("#speed");
+
+$("#value-input").tmpl({
+    "title": "進行方向",
+    "valueName": "direction"
+}).appendTo("#direction");
+
+$("#value-input").tmpl({
+    "title": "半径",
+    "valueName": "radius"
+}).appendTo("#radius");
+
 $("input[type='text']").each(function() {
     $(this).attr("placeholder", $(this).attr("title"));
 });
+$("input").each(function() {
+    if (!$(this).attr("ng-model")) {
+        $(this).attr("ng-model", "MainCtrl");
+    }
+    $(this).attr("ng-change", "regenerate()");
+});
 </script>
+
+<script src="particleelement.js"></script>
+<script src="data.js"></script>
+<script src="main.js"></script>
 
 </body>
 </html>
